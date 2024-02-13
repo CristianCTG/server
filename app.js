@@ -79,6 +79,21 @@ app.get('/ads', (req, res) => {
     res.send(videoContent);
 })
 
+app.get('/apk', (req, res) =>{
+    const apkFilePath = path.join(__dirname, 'assets', 'apk', 'veotrans.apk');
+    
+    // Verificar si el archivo existe
+    fs.access(apkFilePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.error('El archivo APK no existe:', err);
+            return res.status(404).send('APK Not Found');
+        }
+
+        // Enviar el archivo APK
+        res.sendFile(apkFilePath);
+    });
+});
+
 app.get('/movie/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     const moviesFolder = path.join(__dirname, '/assets/movies/');
